@@ -2,7 +2,9 @@ package mobile.hectordevelopers.keita.controller;
 
 import mobile.hectordevelopers.keita.enums.MenuStatus;
 import mobile.hectordevelopers.keita.exception.ResourceNotFoundException;
+import mobile.hectordevelopers.keita.model.Image;
 import mobile.hectordevelopers.keita.model.MealMenu;
+import mobile.hectordevelopers.keita.repository.ImageRepositry;
 import mobile.hectordevelopers.keita.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +30,15 @@ import java.util.Map;
 public class MealMenuController {
     @Autowired
     MenuRepository menuRepository;
+    @Autowired
+    ImageRepositry imageRepositry;
 
     @GetMapping("menu")
     List<MealMenu> getAllMenus() {
         return menuRepository.findAll();
     }
 
-    @PostMapping("menu")
+    @PostMapping(value = "menu", consumes = "multipart/form-data")
     //
     public ResponseEntity<Object> createMenu(@Valid MealMenu mealMenu
             , @RequestParam(value = "mymenuImage", required = true) MultipartFile file ) throws IOException {
@@ -51,7 +56,12 @@ try {
    byte[] buffer = new byte[initialStream.available()];
 
    System.out.println(buffer.length);
-    //   mealMenu.setMymenuImage(buffer);
+    Image image =new Image();
+    image.setContentType(mealMenu.getMenuImage().getContentType()==null?"":mealMenu.getMenuImage().getContentType());
+    image.setData(mealMenu.getMenuImage().getData());
+    image.setInUse(true);
+     imageRepositry.save(image);
+
 
 }catch(Exception e){
   //  e

@@ -16,7 +16,11 @@ public class MealMenu {
     private String size;
     private String proteinType;
     private MenuStatus status;
-    private String menuImage;
+
+    @OneToOne(
+            fetch = FetchType.LAZY
+    )
+    private Image menuImage;
 /*
     private byte[] mymenuImage;
 
@@ -88,11 +92,11 @@ public class MealMenu {
         this.status = status;
     }
 
-    public String getMenuImage() {
+    public Image getMenuImage() {
         return menuImage;
     }
 
-    public void setMenuImage(String menuImage) {
+    public void setMenuImage(Image menuImage) {
         this.menuImage = menuImage;
     }
 }
