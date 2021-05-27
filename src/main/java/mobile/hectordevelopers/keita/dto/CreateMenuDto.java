@@ -1,49 +1,25 @@
-package mobile.hectordevelopers.keita.model;
+package mobile.hectordevelopers.keita.dto;
 
 import mobile.hectordevelopers.keita.enums.MenuStatus;
-import org.springframework.lang.Nullable;
+import mobile.hectordevelopers.keita.model.Image;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
-@Entity
-@Table(name = "menu")
-public class MealMenu {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+/**
+ * @author Abbas Irekeola
+ * @Email abbasirekeola@gmail.com
+ * 27/05/2021-15:34
+ */
+public class CreateMenuDto {
     private String menu_name;
     private String menu_price;
     private String category;
     private String size;
     private String proteinType;
     private MenuStatus status;
-
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
-    private Image menuImage;
-/*
-    private byte[] mymenuImage;
-
-    public byte[] getMymenuImage() {
-        return mymenuImage;
-    }
-
-    public void setMymenuImage(byte[] mymenuImage) {
-        this.mymenuImage = mymenuImage;
-    }
-    */
-
-    public MealMenu() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private MultipartFile menuImage;
 
     public String getMenu_name() {
         return menu_name;
@@ -93,11 +69,11 @@ public class MealMenu {
         this.status = status;
     }
 
-    public Image getMenuImage() {
+    public MultipartFile getMenuImage() {
         return menuImage;
     }
 
-    public void setMenuImage(Image menuImage) {
+    public void setMenuImage(MultipartFile menuImage) {
         this.menuImage = menuImage;
     }
 }

@@ -1,5 +1,6 @@
 package mobile.hectordevelopers.keita.controller;
 
+import mobile.hectordevelopers.keita.dto.CreateMenuDto;
 import mobile.hectordevelopers.keita.enums.MenuStatus;
 import mobile.hectordevelopers.keita.exception.ResourceNotFoundException;
 import mobile.hectordevelopers.keita.model.Image;
@@ -40,8 +41,7 @@ public class MealMenuController {
 
     @PostMapping(value = "menu", consumes = "multipart/form-data")
     //
-    public ResponseEntity<Object> createMenu(@Valid MealMenu mealMenu
-            , @RequestParam(value = "mymenuImage", required = true) MultipartFile file ) throws IOException {
+    public ResponseEntity<Object> createMenu(@Valid CreateMenuDto mealMenu) throws IOException {
         mealMenu.setStatus(MenuStatus.ORDERED);
 
 
@@ -52,13 +52,13 @@ public class MealMenuController {
         System.out.println("Menu Protein" + mealMenu.getProteinType());
         System.out.println("Menu Image" + mealMenu.getMenuImage());
 try {
-   InputStream initialStream = file.getInputStream();
-   byte[] buffer = new byte[initialStream.available()];
+//   InputStream initialStream = file.getInputStream();
+//   byte[] buffer = new byte[initialStream.available()];
 
-   System.out.println(buffer.length);
+//   System.out.println(buffer.length);
     Image image =new Image();
     image.setContentType(mealMenu.getMenuImage().getContentType()==null?"":mealMenu.getMenuImage().getContentType());
-    image.setData(mealMenu.getMenuImage().getData());
+    image.setData(mealMenu.getMenuImage().getBytes());
     image.setInUse(true);
      imageRepositry.save(image);
 
@@ -86,8 +86,25 @@ try {
         * update th menuImage value with the id.
         * your databse would have something like 1.jpeg for menuImage.
         * */
+       MealMenu menu =  new MealMenu();
+       menu.setMenu_name(mealMenu.getMenu_name());
+       menu.setMenu_price(mealMenu.getMenu_price());
+       menu.setCategory(mealMenu.getCategory());
+       menu.setSize(mealMenu.getSize());
+       menu.setProteinType(mealMenu.getProteinType());
+       menu.setStatus(MenuStatus.ORDERED);
 
-        return new ResponseEntity<>(menuRepository.save(mealMenu), HttpStatus.CREATED);
+        Image image = new Image();
+        image.setData(mealMenu.getMenuImage().getBytes());
+        image.setDescription( mealMenu.getMenu_name() +"Menu Image");
+        image.setInUse(true);
+        image.setContentType(mealMenu.getMenuImage().getContentType());
+        imageRepositry.save(image);
+
+
+        menu.setMenuImage(image);
+
+        return new ResponseEntity<>(menuRepository.save(menu), HttpStatus.CREATED);
     }
 
 
