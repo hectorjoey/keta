@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ImageRepositry extends JpaRepository<Image, Long> {
+public interface ImageRepository extends JpaRepository<Image, Long> {
 
 
 }

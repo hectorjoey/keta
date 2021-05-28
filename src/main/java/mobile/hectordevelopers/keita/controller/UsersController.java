@@ -37,6 +37,15 @@ public class UsersController {
         return usersRepository.findAll();
     }
 
+    //get User by Id
+    @GetMapping("user/{id}")
+    public ResponseEntity<Users> getMemberById(@PathVariable(value = "id") Long id)
+            throws ResourceNotFoundException {
+        Users users = usersRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
+        return ResponseEntity.ok().body(users);
+    }
+
     @PostMapping("users")
     public ResponseEntity<Object> createUser(@Valid Users users) throws EmailExistsException {
         Users usersEmail = usersRepository.findByEmail(users.getEmail());

@@ -11,16 +11,15 @@ public class MealMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String menu_name;
-    private String menu_price;
+    private String menuName;
+    private String menuPrice;
+    private String menuDescription;
     private String category;
     private String size;
     private String proteinType;
     private MenuStatus status;
 
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
+    @OneToOne(fetch = FetchType.LAZY)
     private Image menuImage;
 /*
     private byte[] mymenuImage;
@@ -37,6 +36,17 @@ public class MealMenu {
     public MealMenu() {
     }
 
+    public MealMenu(String menuName, String menuPrice, String menuDescription, String category, String size, String proteinType, MenuStatus status, Image menuImage) {
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+        this.menuDescription = menuDescription;
+        this.category = category;
+        this.size = size;
+        this.proteinType = proteinType;
+        this.status = status;
+        this.menuImage = menuImage;
+    }
+
     public long getId() {
         return id;
     }
@@ -45,20 +55,28 @@ public class MealMenu {
         this.id = id;
     }
 
-    public String getMenu_name() {
-        return menu_name;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setMenu_name(String menu_name) {
-        this.menu_name = menu_name;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
-    public String getMenu_price() {
-        return menu_price;
+    public String getMenuPrice() {
+        return menuPrice;
     }
 
-    public void setMenu_price(String menu_price) {
-        this.menu_price = menu_price;
+    public void setMenuPrice(String menuPrice) {
+        this.menuPrice = menuPrice;
+    }
+
+    public String getMenuDescription() {
+        return menuDescription;
+    }
+
+    public void setMenuDescription(String menuDescription) {
+        this.menuDescription = menuDescription;
     }
 
     public String getCategory() {

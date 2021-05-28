@@ -13,28 +13,37 @@ import javax.persistence.OneToOne;
  * 27/05/2021-15:34
  */
 public class CreateMenuDto {
-    private String menu_name;
-    private String menu_price;
+    private String menuName;
+    private String menuPrice;
+    private String menuDescription;
     private String category;
     private String size;
     private String proteinType;
     private MenuStatus status;
     private MultipartFile menuImage;
 
-    public String getMenu_name() {
-        return menu_name;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setMenu_name(String menu_name) {
-        this.menu_name = menu_name;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
-    public String getMenu_price() {
-        return menu_price;
+    public String getMenuPrice() {
+        return menuPrice;
     }
 
-    public void setMenu_price(String menu_price) {
-        this.menu_price = menu_price;
+    public void setMenuPrice(String menuPrice) {
+        this.menuPrice = menuPrice;
+    }
+
+    public String getMenuDescription() {
+        return menuDescription;
+    }
+
+    public void setMenuDescription(String menuDescription) {
+        this.menuDescription = menuDescription;
     }
 
     public String getCategory() {
